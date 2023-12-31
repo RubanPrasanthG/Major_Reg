@@ -27,7 +27,7 @@
         }
         
         body {
-          background: #c9c9c9;
+          background: #ffffff;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -299,21 +299,20 @@
 </head>
 
 <body>
-    <h2><b>BILLFOLD</b></h2>
-    <h6>Explore the crypto world using billfold</h6>
+    <h2><b><span style="color: #ff0000; font-size: 70px;" >D</span>-MED</b></h2>
+    <h6>Decentralized Medical Data System</h6>
 <div class="container " id="container">
   <div class="form-container sign-up-container mt-lg-4 mt-md-3 mt-2"id="signup-section">
     <form action="#">
       <h1>Create Account</h1>
       <div class="social-container">
-        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" class="social"><i class="fa-solid fa-location-dot"></i></a>
+        <a href="#" class="social"><i class="fa-regular fa-hospital"></i></a>
+        <a href="#" class="social"><i class="fa-solid fa-phone"></i></a>
       </div>
       <input type="text" id="name" placeholder="Name" />
       <input type="email" id="email" placeholder="Email" />
       <input type="password" id="password" placeholder="Password" />
-      <input type="password" id="reenter_password" placeholder="re-enter pass" />
       <button id="signup_button">Sign Up</button>
     </form>
   </div>
@@ -323,12 +322,12 @@
       <form id="loginForm">
         <h1>Sign in</h1>
         <div class="social-container">
-          <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class=" social"><i class="fab fa-google-plus-g"></i></a>
-          <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="social"><i class="fa-solid fa-location-dot"></i></a>
+          <a href="#" class=" social"><i class="fa-regular fa-hospital"></i></a>
+          <a href="#" class="social"><i class="fa-solid fa-phone"></i></a>
         </div>
-        <span>or use your account</span>
-        <input type="email" id="loginEmail" placeholder="Email" />
+        
+        <input type="email" id="loginEmail" placeholder="Org-Email" />
         <input type="password" id="loginPassword" placeholder="Password" />
         <a href="#">Forgot your password?</a>
         <button id="login_button">Sign In</button>
@@ -343,109 +342,12 @@
         <button class="ghost" id="signIn">Sign In</button>
       </div>
       <div class="overlay-panel overlay-right">
-        <h1>Hello, Billfold!</h1>
-        <p>Enter your personal details and start journey with us</p>
+        <h1>Hello, D-MED!</h1>
+        <p>Enter your i-am details and start journey with us</p>
         <button class="ghost" id="signUp">Sign Up</button>
       </div>
     </div>
   </div>
 </div>
 </body>
-<script>
-    const signUpButton = document.getElementById("signUp");
-const signInButton = document.getElementById("signIn");
-const container = document.getElementById("container");
-
-signUpButton.addEventListener("click", () => {
-  container.classList.add("right-panel-active");
-});
-
-signInButton.addEventListener("click", () => {
-  container.classList.remove("right-panel-active");
-});
-</script>
-
-
-<script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js';
-import { getDatabase, ref, set } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js';
-const firebaseConfig = {
-    apiKey: "AIzaSyBZCwc9VCWX1zw9jOMwMkpnItTfakxwiDc",
-    authDomain: "billfold-15b7b.firebaseapp.com",
-    projectId: "billfold-15b7b",
-    storageBucket: "billfold-15b7b.appspot.com",
-    messagingSenderId: "178110295379",
-    appId: "1:178110295379:web:135f075f866dfaeb3505a6",
-    measurementId: "G-ZBKLCEJCYN"
-  };
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-// Get references to HTML elements
-const nameInput = document.getElementById("name");
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
-const reenterPasswordInput = document.getElementById("reenter_password");
-const signupButton = document.getElementById("signup_button");
-const loginButton = document.getElementById("login_button");
-
-let loginClicked = false; // Track if the login button was clicked
-
-// Handle sign-up button click
-signupButton.addEventListener("click", async () => {
-  const name = nameInput.value;
-  const email = emailInput.value;
-  const password = passwordInput.value;
-  const reenterPassword = reenterPasswordInput.value;
-
-  if (password === reenterPassword) {
-    try {
-      // Register the user with email and password
-      const auth = getAuth();
-      await createUserWithEmailAndPassword(auth, email, password);
-
-      // Store user data in the Realtime Database
-      const usersRef = ref(getDatabase(), 'users/' + auth.currentUser.uid);
-      set(usersRef, {
-        name: name,
-        email: email,
-        password: password
-      });
-
-      alert("Sign-up and data storage successful!");
-    } catch (error) {
-      alert("Error: " + error.message);
-    }
-  } else {
-    alert("Passwords do not match.");
-  }
-  loginClicked = false; // Set loginClicked to false when sign-up button is clicked
-});
-
-// Handle login button click
-loginButton.addEventListener("click", async () => {
-  const email = emailInput.value;
-  const password = passwordInput.value;
-
-  try {
-    // Sign in the user with email and password
-    const auth = getAuth();
-    await signInWithEmailAndPassword(auth, email, password);
-
-    alert("Login successful!");
-
-    // Redirect to the index page only when login is successful
-    if (loginClicked) {
-      window.location.href = "https://laughing-lamp-g94vrvrr9642w46p-5000.app.github.dev/"; // Replace with the actual URL of your index page
-    }
-    loginClicked = true; // Set loginClicked to true after login button is clicked
-  } catch (error) {
-    alert("Error: " + error.message);
-  }
-});
-
-
-</script>
-
 </html>
